@@ -3,6 +3,9 @@ cache2go
 
 Concurrency-safe golang caching library with expiration capabilities.
 
+## fork 说明：
+对 cache2go 对学习注解
+
 ## Installation
 
 Make sure you have a working Go environment (Go 1.2 or higher is required).

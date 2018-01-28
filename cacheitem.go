@@ -77,6 +77,7 @@ func (item *CacheItem) AccessedOn() time.Time {
 // CreatedOn returns when this item was added to the cache.
 func (item *CacheItem) CreatedOn() time.Time {
 	// immutable
+	// 因为该值不可改变，所以无需加锁
 	return item.createdOn
 }
 
@@ -96,6 +97,7 @@ func (item *CacheItem) Key() interface{} {
 // Data returns the value of this cached item.
 func (item *CacheItem) Data() interface{} {
 	// immutable
+	// 注意 CacheItem.data 是只读的，不可修改
 	return item.data
 }
 

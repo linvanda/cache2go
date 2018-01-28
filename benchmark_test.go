@@ -47,3 +47,32 @@ func BenchmarkNotFoundAdd(b *testing.B) {
 	finish.Wait()
 
 }
+
+func BenchmarkRWMutexRLock(b *testing.B) {
+	var rw sync.RWMutex
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		rw.RLock()
+		rw.RUnlock()
+	}
+}
+
+func BenchmarkRWMutexLock(t *testing.B) {
+	var rw sync.RWMutex
+
+	t.ResetTimer()
+	for i := 0; i < t.N; i++ {
+		rw.Lock()
+		rw.Unlock()
+	}
+}
+
+func BenchmarkMutexLock(t *testing.B) {
+	var m sync.Mutex
+
+	t.ResetTimer()
+	for i := 0; i < t.N; i++ {
+		m.Lock()
+		m.Unlock()
+	}
+}
