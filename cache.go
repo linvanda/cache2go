@@ -21,15 +21,15 @@ var (
 // if the table does not exist yet.
 func Cache(table string) *CacheTable {
 	// 这里加的是读锁，大部分情况下 table 已经存在，不会走到 if 里面，
-	// cache 属于读多写少的场景，需使用 RWM	utex 加锁。
-	// (写锁加锁成功的条件：没有锁定或只有读锁定时。如果有写锁或等待中的写锁，则无法加读锁)
+	// cache 属于读多写少的场景，需使用 RWMutex 加锁。
+	// (读锁加锁成功的条件：没有锁定或只有读锁定时。如果有写锁或等待中的写锁，则无法加读锁)
 	mutex.RLock()
 	t, ok := cache[table]
 	mutex.RUnlock()
 
 	if !ok {
 		// 加写锁。此时该锁可能已经被其他协程获得，此处将进入阻塞（有可能被换入等待队列中）。
-		// 因而，此处加锁成功后需要再次判断 cache[table] 是否已经存在
+		// 因而，此处加锁成功后需要再次判断 cache[table] 是否已经存在，只有不存在时才能执行后续程序，否则会覆盖已有缓存
 		mutex.Lock()
 		t, ok = cache[table]
 		// Double check whether the table exists or not.

@@ -4,7 +4,7 @@ cache2go
 Concurrency-safe golang caching library with expiration capabilities.
 
 ## fork 说明：
-对 cache2go 对学习注解
+对 cache2go 的学习注解
 
 ## Installation
 

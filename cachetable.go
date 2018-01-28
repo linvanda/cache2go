@@ -16,7 +16,7 @@ import (
 
 // CacheTable is a table within the cache
 type CacheTable struct {
-	// 组合零 RWMutex 的行为
+	// 组合 RWMutex 的行为
 	sync.RWMutex
 
 	// The table's name.
@@ -94,7 +94,7 @@ func (table *CacheTable) SetLogger(logger *log.Logger) {
 func (table *CacheTable) expirationCheck() {
 	table.Lock()
 	if table.cleanupTimer != nil {
-		// 此处需要执行 stop，因为此函数有可能是手动调用的（如中 Add 中）
+		// 此处需要执行 stop，因为此函数有可能是手动调用的（如在 Add 中）
 		table.cleanupTimer.Stop()
 	}
 	if table.cleanupInterval > 0 {
